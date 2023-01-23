@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "apiservice"
+version = "0.1.0"
+description = ""
+authors = ["Prawal Gangwar <prawal@secureailabs.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8.1"
+
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^6.0.0"
+black = "^22.12.0"
+isort = "^5.11.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

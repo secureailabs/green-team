@@ -1,0 +1,14 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+    "name": "Node.js project",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "extensions": [
+        "dbaeumer.vscode-eslint"
+    ],
+    "remoteUser": "node",
+    "features": {
+        "ghcr.io/devcontainers-contrib/features/typescript:2": {}
+    }
+}
