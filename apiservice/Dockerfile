@@ -30,5 +30,6 @@ RUN poetry config virtualenvs.create false && poetry install --no-dev
 COPY apiservice /apiservice
 
 COPY entrypoint.sh /entrypoint.sh
+RUN sed -i -e 's/\r$//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
