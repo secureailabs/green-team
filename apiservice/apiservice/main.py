@@ -21,18 +21,6 @@ server.include_router(authentication.router)
 server.include_router(accounts.router)
 
 
-# Override the default validation error handler as it throws away a lot of information
-# about the schema of the request body.
-class ValidationError(BaseModel):
-    error: StrictStr = Field(default="Invalid Schema")
-
-
-@server.exception_handler(RequestValidationError)
-async def validation_exception_handler(request, exc):
-    error = ValidationError(error="Invalid Schema")
-    return JSONResponse(status_code=422, content=jsonable_encoder(error))
-
-
 @server.exception_handler(Exception)
 async def server_error_exception_handler(request: Request, exc: Exception):
     """
@@ -47,6 +35,3 @@ async def server_error_exception_handler(request: Request, exc: Exception):
     # Log the error to the uvicorn logger
     logger = logging.getLogger("uvicorn.error")
     logger.error(message)
-
-
-utils.validation_error_response_definition = ValidationError.schema()
