@@ -147,12 +147,18 @@ async def video_to_text(video_id: PyObjectId, video_path: str):
     with open("sample_data/text1.txt", "r") as file:
         result_text = file.read()
 
+    # TODO: Generate the summary of the text and the title
+    with open("sample_data/summary1.txt", "r") as file:
+        summary_text = file.read()
+    with open("sample_data/title1.txt", "r") as file:
+        title_text = file.read()
+
     # Add the text to the database
     response = await data_service.update_one(
         DB_COLLECTION_VIDEOS,
         {"_id": str(video_id)},
-        {"$set": {"text": result_text}},
+        {"$set": {"text": result_text, "summary": summary_text, "title": title_text}},
     )
 
     if response.modified_count == 0:
-        print(response)
+        raise Exception("Failed to update the video")

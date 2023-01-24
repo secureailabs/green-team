@@ -28,5 +28,3 @@ build-backend = "poetry.core.masonry.api"
 [tool.pyright]
 pythonVersion = "3.8"
 reportMissingImports = true
-reportMissingTypeStubs = true
-reportMissingTypeStubsWarning = true
