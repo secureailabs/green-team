@@ -1,8 +1,9 @@
-from api.authentication import get_current_user, get_password_hash
+from authentication import get_current_user, get_password_hash
 from data import operations as data_service
 from fastapi import APIRouter, Body, Depends, HTTPException, Path, status
 from fastapi.encoders import jsonable_encoder
 from models.accounts import (
+    AddSocialMedia_In,
     GetMultipleUsers_Out,
     GetUsers_Out,
     RegisterUser_In,
@@ -12,6 +13,7 @@ from models.accounts import (
 )
 from models.authentication import TokenData
 from models.common import PyObjectId
+from utils import background_couroutines
 
 DB_COLLECTION_USERS = "users"
 router = APIRouter()
@@ -79,6 +81,38 @@ async def get_user(
 ) -> GetUsers_Out:
     user = await data_service.find_one(DB_COLLECTION_USERS, {"_id": str(user_id)})
     if not user:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Organization not found")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
 
     return GetUsers_Out(**user)
+
+
+async def scrape_social_media(user_id: PyObjectId, social_media_handle: str):
+    pass
+
+
+@router.put(
+    path="/users/{user_id}",
+    description="Add a new social media handle",
+    response_model_by_alias=False,
+    response_model_exclude_unset=True,
+    status_code=status.HTTP_204_NO_CONTENT,
+    operation_id="get_user",
+)
+async def set_user_handle(
+    user_id: PyObjectId = Path(description="UUID of the requested user"),
+    social_media_handle: AddSocialMedia_In = Body(description="Social media handle"),
+    current_user: TokenData = Depends(get_current_user),
+) -> None:
+    user = await data_service.find_one(DB_COLLECTION_USERS, {"_id": str(user_id)})
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Organization not found")
+    user = User_Db(**user)
+
+    # Update the social media handle one by one
+    for key in social_media_handle.social_media:
+        user.social_media[key] = social_media_handle.social_media[key]
+
+        # Create a background task to scrape the social media handle and add it to database
+        background_couroutines.add_async_task(scrape_social_media(user_id, social_media_handle.social_media[key]))
+
+    await data_service.update_one(DB_COLLECTION_USERS, {"_id": str(user_id)}, jsonable_encoder(user))

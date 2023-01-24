@@ -6,7 +6,7 @@ run: build_container
 
 # Run the api service in the foreground and print the logs to the terminal
 debug_run: build_container
-	@docker run -it --rm --name $(CONTAINER_NAME) -p 8000:8000 -v apiservice:/apiservice $(CONTAINER_NAME)
+	@docker run -it --rm --name $(CONTAINER_NAME) -p 8000:8000 -v $(PWD)/apiservice/:/apiservice $(CONTAINER_NAME)
 
 # Build the container
 build_container:

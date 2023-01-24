@@ -1,9 +1,9 @@
 from datetime import datetime
 from enum import Enum
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from models.common import PyObjectId, SailBaseModel
-from pydantic import EmailStr, Field, StrictStr
+from pydantic import Field, StrictStr
 
 
 class UserAccountState(Enum):
@@ -11,9 +11,19 @@ class UserAccountState(Enum):
     INACTIVE = "INACTIVE"
 
 
+class SocialMedia(Enum):
+    TIKTOK = "TIKTOK"
+    FACEBOOK = "FACEBOOK"
+    TWITTER = "TWITTER"
+    LINKEDIN = "LINKEDIN"
+    INSTAGRAM = "INSTAGRAM"
+    YOUTUBE = "YOUTUBE"
+    PINTEREST = "PINTEREST"
+
+
 class User_Base(SailBaseModel):
     name: StrictStr = Field(...)
-    email: EmailStr = Field(...)
+    email: StrictStr = Field(...)
     avatar: Optional[StrictStr] = Field(default=None)
 
 
@@ -22,6 +32,7 @@ class User_Db(User_Base):
     account_creation_time: datetime = Field(default_factory=datetime.utcnow)
     hashed_password: StrictStr = Field(...)
     account_state: UserAccountState = Field(...)
+    social_media: Dict[SocialMedia, str] = Field(default=[])
 
 
 class UserInfo_Out(User_Base):
@@ -39,9 +50,13 @@ class RegisterUser_Out(SailBaseModel):
 class GetUsers_Out(User_Base):
     id: PyObjectId = Field(alias="_id")
     name: StrictStr = Field(...)
-    email: EmailStr = Field(...)
+    email: StrictStr = Field(...)
     avatar: Optional[StrictStr] = Field(...)
 
 
 class GetMultipleUsers_Out(SailBaseModel):
     users: List[GetUsers_Out] = Field(...)
+
+
+class AddSocialMedia_In(SailBaseModel):
+    social_media: Dict[SocialMedia, str] = Field(...)

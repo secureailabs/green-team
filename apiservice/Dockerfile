@@ -2,12 +2,14 @@ FROM ubuntu:20.04
 
 ENV TZ=America/Toronto
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+USER root
 
 RUN apt-get update && \
   apt-get -y upgrade && \
   apt-get install -y \
   wget \
   sudo \
+  python3 \
   python3-pip
 
 # Install mongodb
@@ -22,12 +24,12 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /srv/mongodb/db0 && chown -R mongodb:mongodb /srv/mongodb/db0
 RUN mongod --port 27017 --dbpath /srv/mongodb/db0 --replSet rs0 --bind_ip localhost --fork --logpath /var/log/mongod.log
 
-WORKDIR /app
 RUN pip3 install poetry==1.3.2
-COPY poetry.lock pyproject.toml /app/
-RUN poetry config virtualenvs.create false && poetry install --no-dev
+COPY poetry.lock pyproject.toml poetry.toml /
+# RUN poetry config virtualenvs.create false && poetry install --no-dev --no-interaction --no-ansi
+RUN poetry install --no-dev --no-interaction --no-ansi
 
-COPY apiservice /apiservice
+COPY ./apiservice/ /apiservice
 
 COPY entrypoint.sh /entrypoint.sh
 RUN sed -i -e 's/\r$//' /entrypoint.sh
