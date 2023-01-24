@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta
+            name="description"
+            content="Web site created using create-react-app"
+        />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <title>React App</title>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <!-- <div id="root"></div> -->
+
+        <!-- Sidebar -->
+        <div class="w3-sidebar w3-light-grey w3-bar-block w3-card-4" style="width:15%">
+            <h3 class="w3-bar-item w3-blue">Patient Profile</h3>
+            <a id="sidebar-button" onclick="openProfileTab('Dashboard')" class="w3-bar-item w3-button w3-border-bottom">Dashboard</a>
+            <a id="sidebar-button" onclick="openProfileTab('Journal')" class="w3-bar-item w3-button w3-border-bottom">Journal</a>
+            <a id="sidebar-button" onclick="openProfileTab('Polls')" class="w3-bar-item w3-button w3-border-bottom">Polls</a>
+            <a id="sidebar-button" onclick="openProfileTab('Fundraising')" class="w3-bar-item w3-button w3-border-bottom">Fundraising</a>
+            <br>
+            <h3 class="w3-bar-item w3-light-grey w3-border-bottom">Social Media</h3>
+            <a id="sidebar-button" onclick="openProfileTab('Twitter')" class="w3-bar-item w3-button w3-border-bottom">Twitter</a>
+            <a id="sidebar-button" onclick="openProfileTab('Youtube')" class="w3-bar-item w3-button w3-border-bottom">Youtube</a>
+            </div>
+        </div>
+
+        <!-- Topbar -->
+        <div class="w3-bar w3-blue" style="margin-left:15%">
+            <button class="w3-bar-item w3-button w3-border-right" onclick="document.location='index.html'">All Users</button>
+            <button class="w3-bar-item w3-button w3-border-right" onclick="document.location='profile_page.html'">My Profile</button>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div id="Dashboard" class="w3-container profileTab" style="margin-left:15%">
+            <h2>Dashboard Page</h2>
+    
+            <!-- Dashboard Upper Container Content -->
+            <div class="w3-display-container w3-blue" style="height:400px;">
+                <div class="w3-display-topleft w3-grey w3-circle"  style="height:100px;width:100px;">
+                    <i class="material-icons w3-display-middle" style="font-size:64px">face</i>
+
+                    <!-- This is where the users general profile information will be loaded-->
+
+                </div>
+                <div class="w3-display-right">
+                    Display Right
+                </div>
+            </div>
+            <br>
+
+            <!-- Dashboard Youtube Content -->
+            <div class="w3-display-container w3-blue" style="height:250px;">
+                <h3>Youtube</h3>
+                
+            </div>
+        </div>
+
+        <!-- Journal Content -->
+        <div id="Journal" class="w3-container profileTab" style="margin-left:15%;display:none">
+            <h2>Journal</h2>
+            <p>This is journal page content.</p>
+        </div>
+
+        <!-- Polls Content -->
+        <div id="Polls" class="w3-container profileTab" style="margin-left:15%;display:none">
+            <h2>Polls</h2>
+            <p>This is polls page content.</p>
+        </div>
+
+        <!-- Fundraising Content -->
+        <div id="Fundraising" class="w3-container profileTab" style="margin-left:15%;display:none">
+            <h2>Fundraising</h2>
+            <p>This is fundraising page content.</p>
+        </div>
+
+        <!-- Twitter Content -->
+        <div id="Twitter" class="w3-container profileTab" style="margin-left:15%;display:none">
+            <br>
+            <a class="twitter-timeline" data-width="1000" data-height="600" href="https://twitter.com/kaydaustin?ref_src=twsrc%5Etfw">Tweets by kaydaustin</a>         
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+
+        <!-- Youtube Content -->
+        <div id="Youtube" class="w3-container profileTab" style="margin-left:15%;display:none">
+            <h2>Youtube</h2>
+            <p>This is Youtube page content.</p>
+        </div>
+
+
+        <script>
+            function openProfileTab(profileTabName) {
+                var i;
+                var x = document.getElementsByClassName("profileTab");
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                document.getElementById(profileTabName).style.display = "block";
+            }
+        </script>
+    
+    </body>
+</html>
