@@ -1,4 +1,4 @@
-from authentication import get_current_user, get_password_hash
+from api.authentication import get_current_user, get_password_hash
 from data import operations as data_service
 from fastapi import APIRouter, Body, Depends, HTTPException, Path, status
 from fastapi.encoders import jsonable_encoder
@@ -86,10 +86,6 @@ async def get_user(
     return GetUsers_Out(**user)
 
 
-async def scrape_social_media(user_id: PyObjectId, social_media_handle: str):
-    pass
-
-
 @router.put(
     path="/users/{user_id}",
     description="Add a new social media handle",
@@ -116,3 +112,7 @@ async def set_user_handle(
         background_couroutines.add_async_task(scrape_social_media(user_id, social_media_handle.social_media[key]))
 
     await data_service.update_one(DB_COLLECTION_USERS, {"_id": str(user_id)}, jsonable_encoder(user))
+
+
+async def scrape_social_media(user_id: PyObjectId, social_media_handle: str):
+    pass
