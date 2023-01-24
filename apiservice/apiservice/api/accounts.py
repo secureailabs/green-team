@@ -16,6 +16,8 @@ from models.common import PyObjectId
 from utils import background_couroutines
 
 DB_COLLECTION_USERS = "users"
+DB_COLLECTION_VIDEOS = "videos"
+DB_COLLECTION_TEXTS = "texts"
 router = APIRouter()
 
 
@@ -111,8 +113,52 @@ async def set_user_handle(
         # Create a background task to scrape the social media handle and add it to database
         background_couroutines.add_async_task(scrape_social_media(user_id, social_media_handle.social_media[key]))
 
-    await data_service.update_one(DB_COLLECTION_USERS, {"_id": str(user_id)}, jsonable_encoder(user))
+    await data_service.update_one(DB_COLLECTION_USERS, {"_id": str(user_id)}, {"$set": jsonable_encoder(user)})
 
 
 async def scrape_social_media(user_id: PyObjectId, social_media_handle: str):
-    pass
+
+    # TODO: download all videos and get the path of the downloaded video as a list
+    video_paths = [
+        {"path": "sample_data/vid1.mp4", "timestamp": "2021-01-01 00:00:00"},
+    ]
+
+    for video in video_paths:
+        # Add the path of the scrapped video to the database
+        result = await data_service.insert_one(
+            DB_COLLECTION_VIDEOS,
+            {
+                "_id": str(PyObjectId()),
+                "user_id": str(user_id),
+                "video_path": video["path"],
+                "timestamp": video["timestamp"],
+            },
+        )
+
+        # Create a background task to extract the text from the video
+        background_couroutines.add_async_task(video_to_text(result.inserted_id, video["path"]))
+
+
+async def video_to_text(video_id: PyObjectId, video_path: str):
+    # TODO Convert video to wav audio file
+
+    # TODO Convert wav audio file to text
+    # Read the text from the file as a string
+    with open("sample_data/text1.txt", "r") as file:
+        result_text = file.read()
+
+    # TODO: Generate the summary of the text and the title
+    with open("sample_data/summary1.txt", "r") as file:
+        summary_text = file.read()
+    with open("sample_data/title1.txt", "r") as file:
+        title_text = file.read()
+
+    # Add the text to the database
+    response = await data_service.update_one(
+        DB_COLLECTION_VIDEOS,
+        {"_id": str(video_id)},
+        {"$set": {"text": result_text, "summary": summary_text, "title": title_text}},
+    )
+
+    if response.modified_count == 0:
+        raise Exception("Failed to update the video")

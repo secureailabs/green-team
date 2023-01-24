@@ -5,9 +5,10 @@
             "name": "Python: FastAPI",
             "type": "python",
             "request": "launch",
+            "cwd": "apiservice",
             "module": "uvicorn",
             "args": [
-                "app.main:server",
+                "main:server",
                 "--reload",
             ],
             "jinja": true,

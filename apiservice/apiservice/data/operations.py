@@ -4,7 +4,7 @@ import motor.motor_asyncio
 import pymongo.results as results
 
 client = motor.motor_asyncio.AsyncIOMotorClient("mongodb://127.0.0.1:27017/")
-sail_db = client.sailDatabase
+sail_db = client.superPatient
 
 
 async def find_one(collection, query) -> Optional[dict]:
