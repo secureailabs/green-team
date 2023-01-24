@@ -33,7 +33,6 @@ client: docs
 	@rm -rf generated/py-client/
 	@openapi-python-client generate --path generated/docs/openapi.json
 
-
 # Stop the api service
 stop:
 	@docker kill $(CONTAINER_NAME)
