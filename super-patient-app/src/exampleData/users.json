@@ -1,0 +1,20 @@
+[
+    {
+        "fullname": "Katie Coleman",
+        "age": "31",
+        "twitter_handle": "@kaydaustin",
+        "youtube_handle": "@katiekickscancer4840",
+        "tiktok_handle": "@katiekickscancer",
+        "id": "KatieColeman",
+        "timeline": [
+            {
+                "title": "Exploring the Complexities of Kidney Cancer Treatment: Why Some Subtypes Don't Respond to Immunotherapy",
+                "date": "2022-6-18",
+                "type_event": "video",
+                "video_id": "7110717060237249838",
+                "video_title": "chemo therapy",
+                "transcript": "Cancer is a complex disease and different types of cancer are treated differently. For example, kidney cancer is not typically treated with chemotherapy, which is a toxic treatment, because it does not work well for that type of cancer. Instead, the most common treatment for kidney cancer is immunotherapy. However, not all subtypes of kidney cancer respond to immunotherapy. Chromophobe kidney cancer, for example, does not typically respond well to immunotherapy. There is ongoing research to understand why some subtypes of cancer do not respond to certain treatments and to predict which patients will respond to which treatments. A recent study presented at a large cancer conference focused on the tumor micro environment in chromophobe kidney cancer and other acidic tumors, and found that these tumors do not have many immune cells in their micro environment, which may explain why they do not respond well to immunotherapy."
+            }
+        ]
+    }
+]
