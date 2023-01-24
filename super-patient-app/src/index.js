@@ -9,7 +9,7 @@ import './w3.css';
 /*
   Read local JSON file
 */
-function LoadAllUserData() {
+function LoadAllUsers() {
   const userStr = JSON.stringify(user);
   const userArr = JSON.parse(userStr);
   let userLength = userArr.length;
@@ -19,16 +19,14 @@ function LoadAllUserData() {
   }
 
   return (
-    <React.Fragment>
-      <div>
-        <button href="#">{userArr[0].fullname}</button>
-      </div>
-    </React.Fragment>
+    <ul className="w3-ul w3-border w3-center">
+      {userArr.map(userElement => <li className='w3-blue' key={userElement.id}><button className='w3-button w3-blue w3-center' href="#">{userElement.fullname}</button></li>)}
+    </ul>
   );
 }
 const userDataRoot = ReactDOM.createRoot(document.getElementById('users_list'));
 userDataRoot.render(
-  <LoadAllUserData />
+  <LoadAllUsers />
 );
 
 
@@ -72,23 +70,6 @@ const userProfileRoot = ReactDOM.createRoot(document.getElementById('user_profil
 userProfileRoot.render(
   <LoadProfileData />
 );
-
-/*
-  Function to open the profile window populated with user data
-*/
-function UserProfileActionLink(username) {
-  
-  const openUserProfilePage = (event) => {
-    event.preventDefault();
-    console.log("selected button");
-  }
-
-  return (
-    <button onClick={openUserProfilePage}>
-      {username}
-    </button>
-  )
-}
 
 
 /*
