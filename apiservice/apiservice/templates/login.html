@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', path='/scripts.js') }}"></script>
+    <title>Login/Signup</title>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <div id="login_root"></div>
+
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-light-grey w3-bar-block w3-card-4" style="width:15%">
+        <h3 class="w3-bar-item">Login /<br>Signup</h3>
+        <h5 class="w3-bar-item">Login with an existing user profile.<br><br>or Signup today!</h5>
+    </div>
+
+    <!-- Topbar -->
+    <div class="w3-bar w3-blue" style="margin-left:15%">
+        <button class="w3-bar-item w3-button w3-border-right" onclick="userAction()">All
+            Users</button>
+        <button class="w3-bar-item w3-button w3-border-right" onclick="userAction()">My
+            Profile</button>
+        <button class="w3-bar-item w3-button w3-border-right"
+            onclick="document.location='login_page.html'">Login/Logout/Signup</button>
+    </div>
+
+    <!-- Main Content -->
+    <div id="Super Patients" class="w3-container profileTab" style="margin-left:15%">
+
+        <div id="root"></div>
+
+        <form class="w3-container w3-card-4 w3-light-grey w3-display-left" style="width:30%;margin-left:20%">
+            <h2>Login</h2>
+            <p>Login with valid credentials.</p>
+
+            <p><label>Email</label>
+                <input class="w3-input w3-border w3-round-large" id="email_login" type="text">
+            </p>
+
+            <p><label>Password</label>
+                <input class="w3-input w3-border w3-round-large" id="password_login" type="password">
+            </p>
+            <br><br>
+
+            <p><input type="button" value="Login" onclick='login()'
+                    class="w3-button w3-blue w3-round-large w3-display-bottommiddle" style="margin-bottom:5%;"></button>
+            </p>
+
+        </form>
+</body>
+
+</html>

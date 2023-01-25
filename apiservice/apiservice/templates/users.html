@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', path='/scripts.js') }}"></script>
+    <title>Browse Users</title>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-light-grey w3-bar-block w3-card-4" style="width:15%">
+        <h3 class="w3-bar-item">Super Patients</h3>
+        <h5 class="w3-bar-item">Browse super patients and members of the community.</h5>
+        <div class="w3-bar-item" id="user_data_root">Profiles:
+            <div id="users_list">
+
+            </div>
+        </div>
+        <div class="w3-panel w3-display-bottomleft w3-card-4" style="height:20%;width:80%;margin-left:10%;">
+            <p>
+                Logged in as: {{ user.username }}}
+            </p>
+        </div>
+    </div>
+
+    <!-- Topbar -->
+    <div class="w3-bar w3-blue" style="margin-left:15%">
+        <button class="w3-bar-item w3-button w3-border-right" onclick="document.location='index.html'">Home</button>
+        <button class="w3-bar-item w3-button w3-border-right" onclick="openPageTab('Profile')">Profile</button>
+        <button class="w3-bar-item w3-button w3-border-right" onclick="openPageTab('Signup')">Signup</button>
+    </div>
+
+    <!-- Signup Content -->
+    <div id="Signup" class="w3-container pageTab" style="margin-left:15%;display:none;">
+        <br>
+        <div class="w3-container w3-card-4 w3-light-grey" style="width:100%;margin-right:0%">
+            <h2>Signup</h2>
+            <div id="root"></div>
+
+        </div>
+
+    </div>
+
+    <!-- User Profile Content -->
+    <div id="Profile" class="w3-container pageTab" style="margin-left:15%">
+        <br>
+        <div class="w3-container w3-card-4 w3-light-grey" style="width:100%;margin-right:0%">
+            <h2>User Profile</h2>
+            <hr>
+            <div id="user_profile"></div>
+        </div>
+    </div>
+
+
+    <script>
+        function openPageTab(profileTabName) {
+            var i;
+            var x = document.getElementsByClassName("pageTab");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            document.getElementById(profileTabName).style.display = "block";
+        }
+
+        function openProfileTab(profileTabName) {
+            var i;
+            var x = document.getElementsByClassName("profileTab");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            document.getElementById(profileTabName).style.display = "block";
+        }
+    </script>
+
+</body>
+
+</html>
