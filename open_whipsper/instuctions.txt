@@ -1,0 +1,4 @@
+sudo apt-get update
+sudo apt-get install -y docker.io
+sudo chmod 666 /var/run/docker.sock
+docker run -d -p 9000:9000 -e ASR_MODEL=base onerahmet/openai-whisper-asr-webservice:latest
