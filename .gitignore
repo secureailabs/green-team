@@ -1,1 +1,4 @@
 ffmpeg-master-latest-win64-gpl-shared/doc/fate.html
+chromedriver_win32/chromedriver.exe
+chromedriver_win32/LICENSE.chromedriver
+*.cpython-38.pyc
