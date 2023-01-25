@@ -94,7 +94,7 @@ async def get_user(
     response_model_by_alias=False,
     response_model_exclude_unset=True,
     status_code=status.HTTP_204_NO_CONTENT,
-    operation_id="get_user",
+    operation_id="set_user_handle",
 )
 async def set_user_handle(
     user_id: PyObjectId = Path(description="UUID of the requested user"),
