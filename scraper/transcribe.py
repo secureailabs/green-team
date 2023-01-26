@@ -21,18 +21,3 @@ for user_handle in list_handle:
                 path_file_video = context._path_video_content(user_handle, id_video)
                 transcript = model.transcribe(path_file_video)
                 context.save_transcript(user_handle, id_video, transcript)
-            transcript = context.load_transcript(user_handle, id_video)
-            path_file_video = context._path_video_content(user_handle, id_video)
-            timeline_item = {}
-            timeline_item["_id"] =id_video
-            timeline_item["user_id"] = user_handle
-            timeline_item["video_path"] = path_file_video
-            timeline_item["video_content_url"] = video["url_video_content"]
-            timeline_item["video_page_url"] = video["url_video_page"]
-            timeline_item["timestamp"] = id_video
-            timeline_item["text"] = transcript["text"]
-            timeline_item["summary"] = transcript["text"]
-            timeline_item["title"] = transcript["text"][:100]
-            dict_timeline["timeline"].append(timeline_item)
-    with open("timeline.json", "w") as file:
-        json.dump(dict_timeline, file)

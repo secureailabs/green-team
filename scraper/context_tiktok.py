@@ -7,6 +7,7 @@ class ContextTiktok:
     def __init__(self, path_root) -> None:
         self.__path_root = path_root
 
+
     #user html
     def _path_user_html(self, user_handle:str) -> str:
         path_dir =os.path.join(self.__path_root, user_handle, "user_html")
@@ -85,7 +86,7 @@ class ContextTiktok:
         path_dir = os.path.join(self.__path_root, user_handle, "transcript")
         if not os.path.isdir(path_dir):
             os.makedirs(path_dir)
-        return os.path.join(path_dir, id_video + ".mp4")
+        return os.path.join(path_dir, id_video + ".json")
 
     def has_transcript(self, user_handle:str, id_video:str) -> bool:
         return os.path.isfile(self._path_transcript(user_handle, id_video))
@@ -99,20 +100,20 @@ class ContextTiktok:
             return json.load(file)
 
 
-    # summary
-    def _path_summary(self, user_handle:str, id_video:str) -> str:
-        path_dir = os.path.join(self.__path_root, user_handle, "transcript")
+    # extract
+    def _path_extract(self, user_handle:str, id_video:str, type_extract:str) -> str:
+        path_dir = os.path.join(self.__path_root, user_handle, "extract", type_extract)
         if not os.path.isdir(path_dir):
             os.makedirs(path_dir)
-        return os.path.join(path_dir, id_video + ".mp4")
+        return os.path.join(path_dir, id_video + ".txt")
 
-    def has_summary(self, user_handle:str, id_video:str) -> bool:
-        return os.path.isfile(self._path_summary(user_handle, id_video))
+    def has_extract(self, user_handle:str, id_video:str, type_extract:str) -> bool:
+        return os.path.isfile(self._path_extract(user_handle, id_video, type_extract))
 
-    def save_summary(self, user_handle:str, id_video:str, video_html:str) -> None:
-        with open(self._path_summary(user_handle, id_video), "w") as file:
-            file.write(video_html)
+    def save_extract(self, user_handle:str, id_video:str,  type_extract:str, extract:str,) -> None:
+        with open(self._path_extract(user_handle, id_video, type_extract), "w") as file:
+            file.write(extract)
 
-    def load_summary(self, user_handle:str, id_video:str) -> str:
-        with open(self._path_summary(user_handle, id_video), "r") as file:
+    def load_extract(self, user_handle:str, id_video:str, type_extract:str) -> str:
+        with open(self._path_extract(user_handle, id_video, type_extract), "r") as file:
             return file.read()
