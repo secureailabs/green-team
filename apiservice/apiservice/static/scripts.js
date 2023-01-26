@@ -95,6 +95,26 @@ const get_profile_info = async () => {
 
     document.getElementById("profile_information").innerHTML = "<h2>Name: " + myJson.name + "</h2>";
     document.getElementById("profile_information").innerHTML += "<h4>Email: " + myJson.email + "</h4>";
+    
+    // Get the user socials
+    const response2 = await fetch('http://' + ip + '/api/users/' + myJson.id, {
+        method: 'GET',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
+        }
+    });
+
+    const myJson2 = await response2.json();
+    console.log(JSON.stringify(myJson2, null, 2));
+
+    document.getElementById("twitter_handle").value = myJson2.social_media.TWITTER;
+    document.getElementById("youtube_handle").value = myJson2.social_media.YOUTUBE;
+    document.getElementById("tiktok_handle").value = myJson2.social_media.TIKTOK;
+    document.getElementById("facebook_handle").value = myJson2.social_media.FACEBOOK;
+    document.getElementById("linkedin_handle").value = myJson2.social_media.LINKEDIN;
+    document.getElementById("instagram_handle").value = myJson2.social_media.INSTAGRAM;
+    document.getElementById("pinterest_handle").value = myJson2.social_media.PINTEREST;
 }
 
 
@@ -124,12 +144,24 @@ const get_timeline_data = async () => {
     const timelineObj = jsonObj.timeline;
     let jsonLength = timelineObj.length;
     for (var i = 0; i < jsonLength; i++) {
-        timelineHTML += "<button onclick=\"document.getElementById('id" + timelineObj[i].id + "').style.display='block'\" class=\"w3-button w3-blue\" style=\"width:90%\">" + timelineObj[i].title + "</button>";
+        let source_str = timelineObj[i].video_page_url;
+        var file_source = "NO SOURCE";
+        if(source_str.includes("tiktok")) {
+            file_source = "w3-green";
+        } else if (source_str.includes("youtube")) {
+            file_source = "w3-red";
+        } else if (source_str.includes("twitter")) {
+            file_source = "w3-blue";
+        } else {
+            file_source = "w3-black";
+        }
+        timelineHTML += "<button onclick=\"document.getElementById('id" + timelineObj[i].id + "').style.display='block'\" class=\"w3-button " + file_source + "\" style=\"width:90%\">[" + timelineObj[i].datestring + "]<br>" + timelineObj[i].title + "</button>";
         timelineHTML += "<div id='id" + timelineObj[i].id + "' class='w3-modal'>";
         timelineHTML += "<div class='w3-modal-content w3-card-4'>";
         timelineHTML += "<header class='w3-container w3-blue'>";
         timelineHTML += "<span onclick=\"document.getElementById('id" + timelineObj[i].id + "').style.display='none'\" class=\"w3-button w3-display-topright\">&times;</span>";
-        timelineHTML += "<h2>" + timelineHTML[i].title + "</h2><h5>" + timelineObj[i].datestring + "</h5></header>";
+        timelineHTML += "<h2>" + timelineObj[i].title + "</h2><h5>" + timelineObj[i].datestring + "</h5></header>";
+        //timelineHTML += "<iframe src='" + timelineObj[i].video_page_url + "&embedded=true' title='Video Source'></iframe>"
         timelineHTML += "<div class='w3-container'><h4>Text</h4><p>" + timelineObj[i].text + "</p><h4>Summary</h4><p>" + timelineObj[i].summary + "</p>";
         timelineHTML += "</div><footer class='w3-container w3-blue'><h4>Other Data:</h4>";
         timelineHTML += "<p>id: " + timelineObj[i].id + "</p><p>user_id: " + timelineObj[i].user_id + "</p><p>video_path: " + timelineObj[i].video_path + "</p>";
