@@ -1,4 +1,3 @@
-
 const userAction = async () => {
     var ip = location.host;
     const response = await fetch('http://' + ip + '/api/movies.json', {
@@ -135,18 +134,18 @@ const get_timeline_data = async () => {
 const set_user_handles = async () => {
     var ip = location.host;
 
-    const response = await fetch('http://' + ip + '/api/users', {
+    const response = await fetch('http://' + ip + '/api/users/' + sessionStorage.getItem('user_id'), {
         method: 'PUT',
         body: JSON.stringify({
             "social_media":
             {
-                TIKTOK: get_session_user_variable('tiktok_handle'),
-                FACEBOOK: get_session_user_variable('facebook_handle'),
-                TWITTER: get_session_user_variable('twitter_handle'),
-                LINKEDIN: get_session_user_variable('linkedin_handle'),
-                INSTAGRAM: get_session_user_variable('instagram_handle'),
-                YOUTUBE: get_session_user_variable('youtube_handle'),
-                PINTEREST: get_session_user_variable('pinterest_handle')
+                TIKTOK: get_document_variable('tiktok_handle'),
+                FACEBOOK: get_document_variable('facebook_handle'),
+                TWITTER: get_document_variable('twitter_handle'),
+                LINKEDIN: get_document_variable('linkedin_handle'),
+                INSTAGRAM: get_document_variable('instagram_handle'),
+                YOUTUBE: get_document_variable('youtube_handle'),
+                PINTEREST: get_document_variable('pinterest_handle')
             }
         }),
         headers: {
@@ -154,15 +153,11 @@ const set_user_handles = async () => {
             'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
         }
     });
-    const myJson = await response.json();
-    console.log(myJson);
-    console.log(JSON.stringify(myJson, null, 2));
     if (response.status == 204) {
         alert("User handles Saved. [" + response.status + "]");
-        window.location.href = "http://" + ip + "/login";
     }
     else {
-        alert("Error saving user handles: [" + response.status + "]<br>" + myJson);
+        alert("Error saving user handles: [" + response.status + "]<br>" + JSON.stringify(myJson, null, 2));
     }
 }
 
@@ -171,8 +166,17 @@ const get_twitter_feed = async () => {
     var ip = location.host;
     console.log("Getting twitter feed data...")
 
-    // TODO: Update this assignment after backend integration
-    var twitterHandle = get_session_user_variable('twitter_handle');
+    // Get the twitter handle from backend API
+    const response = await fetch('http://' + ip + '/api/users/' + sessionStorage.getItem('user_id'), {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
+        }
+    });
+    const myJson = await response.json();
+    console.log(myJson);
+    var twitterHandle = myJson.social_media.TWITTER;
     console.log("Getting twitter feed for username: " + twitterHandle);
 
     if (twitterHandle == "None") {
@@ -231,6 +235,14 @@ function get_session_user_variable(item_name) {
         return "None";
     else
         return sessionStorage.getItem(item_name);
+}
+
+
+function get_document_variable(item_name) {
+    if (document.getElementById(item_name) == null)
+        return "None";
+    else
+        return document.getElementById(item_name).value;
 }
 
 

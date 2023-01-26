@@ -52,6 +52,7 @@ class GetUsers_Out(User_Base):
     name: StrictStr = Field(...)
     email: StrictStr = Field(...)
     avatar: Optional[StrictStr] = Field(...)
+    social_media: Dict[SocialMedia, str] = Field(default=[])
 
 
 class GetMultipleUsers_Out(SailBaseModel):
