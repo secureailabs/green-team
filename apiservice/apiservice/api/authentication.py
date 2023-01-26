@@ -45,7 +45,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
 
 
 @router.post(
-    path="/login",
+    path="/api/login",
     description="User login with email and password",
     response_model=LoginSuccess_Out,
     response_model_by_alias=False,
@@ -81,7 +81,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 
 @router.get(
-    path="/me",
+    path="/api/me",
     description="Get the current user information",
     response_description="The current user information",
     response_model=UserInfo_Out,

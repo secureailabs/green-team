@@ -1,7 +1,7 @@
 
 const userAction = async () => {
     var ip = location.host;
-    const response = await fetch('http://' + ip + '/movies.json', {
+    const response = await fetch('http://' + ip + '/api/movies.json', {
         method: 'POST',
         body: { myBody: "sdfs" },
         headers: {
@@ -17,7 +17,7 @@ const login = async () => {
     var ip = location.host;
     var email = document.getElementById("email_login").value;
     var password = document.getElementById("password_login").value;
-    const response = await fetch('http://' + ip + '/login', {
+    const response = await fetch('http://' + ip + '/api/login', {
         method: 'POST',
         body: 'grant_type=&username=' + email + '&password=' + password + '&scope=&client_id=&client_secret=',
         headers: {
@@ -30,7 +30,7 @@ const login = async () => {
     sessionStorage.setItem('access_token', myJson.access_token);
 
     // Get the user id
-    const response2 = await fetch('http://' + ip + '/me', {
+    const response2 = await fetch('http://' + ip + '/api/me', {
         method: 'GET',
         headers: {
             'accept': 'application/json',
@@ -60,7 +60,7 @@ const register_user = async () => {
     var email = document.getElementById("email_register").value;
     var password = document.getElementById("password_register").value;
 
-    const response = await fetch('http://' + ip + '/users', {
+    const response = await fetch('http://' + ip + '/api/users', {
         method: 'POST',
         body: JSON.stringify({ name: username, password: password, email: email }),
         headers: {
@@ -83,7 +83,7 @@ const get_profile_info = async () => {
     var ip = location.host;
 
     // Get the user id
-    const response = await fetch('http://' + ip + '/me', {
+    const response = await fetch('http://' + ip + '/api/me', {
         method: 'GET',
         headers: {
             'accept': 'application/json',
@@ -104,9 +104,9 @@ const get_timeline_data = async () => {
     console.log("Getting timeline data...")
 
     let testJsonStr = '{ "timeline" : [' +
-'{ "id":"01" , "user_id":"111345" , "video_path":"Cdata1.mp4" , "video_content_url":"httpstiktok1" , "video_page_url":"httpstiktok.com@handle1" , "timestamp":"1113451" , "datestring":"2023-01-20" , "text":"text here 01" , "summary":"summary here 01" , "title":"Title 1 here" },' +
-'{ "id":"02" , "user_id":"111345" , "video_path":"Cdata2.mp4" , "video_content_url":"httpstiktok2" , "video_page_url":"httpstiktok.com@handle2" , "timestamp":"1113452" , "datestring":"2023-01-21" , "text":"text here 02" , "summary":"summary here 02" , "title":"Title 2 here" },' +
-'{ "id":"03" , "user_id":"111345" , "video_path":"Cdata3.mp4" , "video_content_url":"httpstiktok3" , "video_page_url":"httpstiktok.com@handle3" , "timestamp":"1113453" , "datestring":"2023-01-22" , "text":"text here 03" , "summary":"summary here 03" , "title":"Title 3 here" } ]}';
+        '{ "id":"01" , "user_id":"111345" , "video_path":"Cdata1.mp4" , "video_content_url":"httpstiktok1" , "video_page_url":"httpstiktok.com@handle1" , "timestamp":"1113451" , "datestring":"2023-01-20" , "text":"text here 01" , "summary":"summary here 01" , "title":"Title 1 here" },' +
+        '{ "id":"02" , "user_id":"111345" , "video_path":"Cdata2.mp4" , "video_content_url":"httpstiktok2" , "video_page_url":"httpstiktok.com@handle2" , "timestamp":"1113452" , "datestring":"2023-01-21" , "text":"text here 02" , "summary":"summary here 02" , "title":"Title 2 here" },' +
+        '{ "id":"03" , "user_id":"111345" , "video_path":"Cdata3.mp4" , "video_content_url":"httpstiktok3" , "video_page_url":"httpstiktok.com@handle3" , "timestamp":"1113453" , "datestring":"2023-01-22" , "text":"text here 03" , "summary":"summary here 03" , "title":"Title 3 here" } ]}';
 
     const jsonObj = JSON.parse(testJsonStr);
     console.log(jsonObj);
@@ -135,16 +135,20 @@ const get_timeline_data = async () => {
 const set_user_handles = async () => {
     var ip = location.host;
 
-    const response = await fetch('http://' + ip + '/users', {
+    const response = await fetch('http://' + ip + '/api/users', {
         method: 'PUT',
-        body: JSON.stringify({ "social_media" :
-            { TIKTOK: get_session_user_variable('tiktok_handle'), 
-                    FACEBOOK: get_session_user_variable('facebook_handle'),  
-                    TWITTER: get_session_user_variable('twitter_handle'),  
-                    LINKEDIN: get_session_user_variable('linkedin_handle'),  
-                    INSTAGRAM: get_session_user_variable('instagram_handle'),  
-                    YOUTUBE: get_session_user_variable('youtube_handle'),  
-                    PINTEREST: get_session_user_variable('pinterest_handle')}}),
+        body: JSON.stringify({
+            "social_media":
+            {
+                TIKTOK: get_session_user_variable('tiktok_handle'),
+                FACEBOOK: get_session_user_variable('facebook_handle'),
+                TWITTER: get_session_user_variable('twitter_handle'),
+                LINKEDIN: get_session_user_variable('linkedin_handle'),
+                INSTAGRAM: get_session_user_variable('instagram_handle'),
+                YOUTUBE: get_session_user_variable('youtube_handle'),
+                PINTEREST: get_session_user_variable('pinterest_handle')
+            }
+        }),
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
@@ -185,7 +189,7 @@ const load_users_page = async () => {
     var ip = location.host;
 
     // TODO: Hook up /users endpoint
-    const response = await fetch('http://' + ip + '/users', {
+    const response = await fetch('http://' + ip + '/api/users', {
         method: 'GET',
         headers: {
             'accept': 'application/json',
@@ -208,7 +212,7 @@ const load_users_page = async () => {
     userlistHTML += "</div><footer class='w3-container w3-blue'><p>Footer</p></div>";
 
     document.getElementById("user_list_modal").innerHTML = userlistHTML;
-    document.getElementById('user_list_modal').style.display='block';
+    document.getElementById('user_list_modal').style.display = 'block';
 
     //window.location.href = "http://" + ip + "/users";
 }
@@ -223,10 +227,10 @@ const logout_and_register = async () => {
 
 
 function get_session_user_variable(item_name) {
-    if(sessionStorage.getItem(item_name) == null)
+    if (sessionStorage.getItem(item_name) == null)
         return "None";
     else
-    return sessionStorage.getItem(item_name);
+        return sessionStorage.getItem(item_name);
 }
 
 
@@ -238,15 +242,15 @@ function clear_session_user_variables() {
 }
 
 
-setInterval(function() {
-    document.getElementById("logged_in_user_box").innerHTML = "<p>Logged in as:</p><p style='font-size:8px';>" + 
-        get_session_user_variable('user_name') + "<br>" + 
-        get_session_user_variable('user_email') + "<br>" + 
+setInterval(function () {
+    document.getElementById("logged_in_user_box").innerHTML = "<p>Logged in as:</p><p style='font-size:8px';>" +
+        get_session_user_variable('user_name') + "<br>" +
+        get_session_user_variable('user_email') + "<br>" +
         get_session_user_variable('user_id') + "</p>";
 }, 1000);
 
 
-window.twttr = (function(d, s, id) {
+window.twttr = (function (d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0],
         t = window.twttr || {};
     if (d.getElementById(id)) return t;
@@ -256,7 +260,7 @@ window.twttr = (function(d, s, id) {
     fjs.parentNode.insertBefore(js, fjs);
 
     t._e = [];
-    t.ready = function(f) {
+    t.ready = function (f) {
         t._e.push(f);
     };
 

@@ -22,7 +22,7 @@ router = APIRouter()
 
 
 @router.post(
-    path="/users",
+    path="/api/users",
     description="Register new user",
     response_description="User Id",
     response_model=RegisterUser_Out,
@@ -53,7 +53,7 @@ async def register_user(
 
 
 @router.get(
-    path="/users",
+    path="/api/users",
     description="Get list of all the users",
     response_description="List of users",
     response_model=GetMultipleUsers_Out,
@@ -62,14 +62,14 @@ async def register_user(
     status_code=status.HTTP_200_OK,
     operation_id="get_all_users",
 )
-async def get_all_users(current_user: TokenData = Depends(get_current_user)):
+async def get_all_users():
     users = await data_service.find_all(DB_COLLECTION_USERS)
 
     return GetMultipleUsers_Out(users=[GetUsers_Out(**user) for user in users])
 
 
 @router.get(
-    path="/users/{user_id}",
+    path="/api/users/{user_id}",
     description="Get the information about a user",
     response_model=GetUsers_Out,
     response_model_by_alias=False,
@@ -89,7 +89,7 @@ async def get_user(
 
 
 @router.put(
-    path="/users/{user_id}",
+    path="/api/users/{user_id}",
     description="Add a new social media handle",
     response_model_by_alias=False,
     response_model_exclude_unset=True,
