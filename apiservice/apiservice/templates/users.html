@@ -16,68 +16,47 @@
 
     <!-- Sidebar -->
     <div class="w3-sidebar w3-light-grey w3-bar-block w3-card-4" style="width:15%">
-        <h3 class="w3-bar-item">Super Patients</h3>
-        <h5 class="w3-bar-item">Browse super patients and members of the community.</h5>
-        <div class="w3-bar-item" id="user_data_root">Profiles:
-            <div id="users_list">
-
-            </div>
-        </div>
-        <div class="w3-panel w3-display-bottomleft w3-card-4" style="height:20%;width:80%;margin-left:10%;">
+        <h3 class="w3-bar-item w3-blue">Patient Profile</h3>
+        <a id="sidebar-button" onclick="openProfileTab('Dashboard')"
+            class="w3-bar-item w3-button w3-border-bottom">Dashboard</a>
+        <a id="sidebar-button" onclick="openProfileTab('Journal')"
+            class="w3-bar-item w3-button w3-border-bottom">Journal</a>
+        <a id="sidebar-button" onclick="openProfileTab('Polls')"
+            class="w3-bar-item w3-button w3-border-bottom">Polls</a>
+        <a id="sidebar-button" onclick="openProfileTab('Fundraising')"
+            class="w3-bar-item w3-button w3-border-bottom">Fundraising</a>
+        <br>
+        <h3 class="w3-bar-item w3-light-grey w3-border-bottom">Social Media</h3>
+        <a id="sidebar-button" onclick="openProfileTab('Twitter')"
+            class="w3-bar-item w3-button w3-border-bottom">Twitter</a>
+        <a id="sidebar-button" onclick="openProfileTab('Youtube')"
+            class="w3-bar-item w3-button w3-border-bottom">Youtube</a>
+        <a id="sidebar-button" onclick="openProfileTab('TikTok')"
+            class="w3-bar-item w3-button w3-border-bottom">TikTok</a>
+        <div id="logged_in_user_box" class="w3-panel w3-display-bottomleft w3-card-4" style="height:20%;width:80%;margin-left:10%;">
             <p>
-                Logged in as: {{ user.username }}}
+                Logged in as:
             </p>
         </div>
+    </div>
     </div>
 
     <!-- Topbar -->
     <div class="w3-bar w3-blue" style="margin-left:15%">
-        <button class="w3-bar-item w3-button w3-border-right" onclick="document.location='index.html'">Home</button>
-        <button class="w3-bar-item w3-button w3-border-right" onclick="openPageTab('Profile')">Profile</button>
-        <button class="w3-bar-item w3-button w3-border-right" onclick="openPageTab('Signup')">Signup</button>
+        <button class="w3-bar-item w3-button w3-border-right" onclick=load_users_page()>All
+            Users</button>
+        <button class="w3-bar-item w3-button w3-border-right" onclick="document.location='profile_page.html'">My
+            Profile</button>
+
+        <button class="w3-bar-item w3-button w3-border-left" style="float:right;margin-right:15%;"
+            onclick='logout()'>Logout</button>
     </div>
 
-    <!-- Signup Content -->
-    <div id="Signup" class="w3-container pageTab" style="margin-left:15%;display:none;">
-        <br>
-        <div class="w3-container w3-card-4 w3-light-grey" style="width:100%;margin-right:0%">
-            <h2>Signup</h2>
-            <div id="root"></div>
-
-        </div>
-
+    <!-- Main Content -->
+    <div id="Dashboard" class="w3-container profileTab" style="margin-left:15%">
+        <h2>All Users Page</h2>
+        <div id="all_users_data"></div>
     </div>
-
-    <!-- User Profile Content -->
-    <div id="Profile" class="w3-container pageTab" style="margin-left:15%">
-        <br>
-        <div class="w3-container w3-card-4 w3-light-grey" style="width:100%;margin-right:0%">
-            <h2>User Profile</h2>
-            <hr>
-            <div id="user_profile"></div>
-        </div>
-    </div>
-
-
-    <script>
-        function openPageTab(profileTabName) {
-            var i;
-            var x = document.getElementsByClassName("pageTab");
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
-            }
-            document.getElementById(profileTabName).style.display = "block";
-        }
-
-        function openProfileTab(profileTabName) {
-            var i;
-            var x = document.getElementsByClassName("profileTab");
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
-            }
-            document.getElementById(profileTabName).style.display = "block";
-        }
-    </script>
 
 </body>
 

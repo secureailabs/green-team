@@ -34,7 +34,7 @@
             class="w3-bar-item w3-button w3-border-bottom">Youtube</a>
         <a id="sidebar-button" onclick="openProfileTab('TikTok')"
             class="w3-bar-item w3-button w3-border-bottom">TikTok</a>
-        <div class="w3-panel w3-display-bottomleft w3-card-4" style="height:20%;width:80%;margin-left:10%;">
+        <div id="logged_in_user_box" class="w3-panel w3-display-bottomleft w3-card-4" style="height:20%;width:80%;margin-left:10%;">
             <p>
                 Logged in as:
             </p>
@@ -44,12 +44,18 @@
 
     <!-- Topbar -->
     <div class="w3-bar w3-blue" style="margin-left:15%">
-        <button class="w3-bar-item w3-button w3-border-right" onclick="document.location='index.html'">All
+        <button class="w3-bar-item w3-button w3-border-right" onclick=load_users_page()>All
             Users</button>
         <button class="w3-bar-item w3-button w3-border-right" onclick="document.location='profile_page.html'">My
             Profile</button>
-        <button class="w3-bar-item w3-button w3-border-right"
-            onclick="document.location='login_page.html'">Login/Logout/Signup</button>
+
+        <button class="w3-bar-item w3-button w3-border-left" style="float:right;margin-right:15%;"
+            onclick='logout()'>Logout</button>
+    </div>
+
+    <!-- User List Modal Content -->
+    <div id="user_list_modal" class="w3-modal">
+
     </div>
 
     <!-- Dashboard Content -->
@@ -70,7 +76,7 @@
                 <h4>Email: email@email.com</h4>
             </div>
 
-            <div class="w3-display-right" style="margin-right:1%">
+            <div id="social_media_update_box" class="w3-display-right" style="margin-right:1%">
                 <form class="w3-container w3-card-4 w3-light-grey">
                     <h2>Social Media Handles</h2>
         
@@ -102,98 +108,7 @@
     <div id="Journal" class="w3-container profileTab" style="margin-left:15%;display:none">
         <h2>Journal</h2>
         <p>This is journal page content.</p>
-
-        <div id="timeline_data">
-            <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-blue" style="width:90%">I realized it's been a while since I've given a health update</button>
-            <div id="id01" class="w3-modal">
-                <div class="w3-modal-content w3-card-4">
-                    <header class="w3-container w3-blue"> 
-                        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                        <h2>I realized it's been a while since I've given a health update</h2>
-                        <h5>2023-01-19 00:19:05</h5>
-                    </header>
-                    <div class="w3-container">
-                        <h4>Text</h4>
-                        <p>
-                            I had a doctor's appointment today and I realized it's been a while since I've given a health update. 
-                            So, stay-tory cancer-inactive surveillance. Let's give the update. I used to give these updates when I was on treatment, 
-                            but I also think it's important to share what active surveillance is like. It's a little bit different for me because I have a super rare cancer, 
-                            but here's what it looks like for me. So, because I have such a rare cancer, I'm actually seen by three different centers. 
-                            I go to MD Anderson for my scans, and that's also where my oncologist is. Then my scans are reviewed and I do telehealth appointments 
-                            with the National Cancer Institute or the NIH. Because they're who did my surgery, and if I ever get any procedures done, they typically are 
-                            the ones who do it. And then I have a third center, which is where I went today, and that is to my local oncologist. I usually just go for labs there, 
-                            and that's why I did today. My labs today came back on normal except for my billy rubin, which is slightly elevated. I've had this up and down. Ever since 
-                            surgery and my ablation, my numbers have always been a little bit off. Turns out the liver doesn't really like to be sliced and diced. We're burned. But 
-                            I'm still here. So that's the important part. I thought I'd share that because it's a part of being on active surveillance for me. Like I feel really great 
-                            right now, but that slight elevation in my billy rubin will still get in my head every now and then. Like I can't tell you how many pictures I have of my eyeball, 
-                            making sure that I don't have John Dis. Am I aware of the fact that it's completely ridiculous? 100%. My doctors aren't too worried, and I solely over time have learned 
-                            not to really worry unless my doctors are worried. But does it stop me from googling and doing ridiculous things? No, it does not. Most surveillance can feel 
-                            frightening at times because you're actively not doing anything, and I know I used to be terrified of it. But it's actually a really good place to be. And I thought 
-                            it was important to share this because sometimes when you see my post or a see-good news, it might look like I have it all together or that I'm not worried about things. 
-                            But there's always a little bit of worry there. Like wondering if I ever have growth on a scan, if my liver could handle more treatment, or what wonky lab values mean, 
-                            which is usually nothing. I've had plenty of labs that are off and then they just resolve on their own. So yeah, that's the update. Today I went for labs. We're read a 
-                            little bit over a slightly wonky lab value. And now I just wait till my next scans. I'm currently on a 4.5 month scan schedule. And my next ones are coming up in March. 
-                            See you next time.
-                        </p>
-                        <h4>Summary</h4>
-                        <p>
-                            I realized it's been a while since I've given a health update . I used to give these updates when I was on treatment, but I also think it's 
-                            important to share what active surveillance is like . Because I have such a rare cancer, I'm actually seen by three different centers . 
-                            My labs today came back on normal except for my billy rubin, which is slightly elevated .
-                        </p>
-                    </div>
-                    <footer class="w3-container w3-blue">
-                        <h4>Other Data:</h4>
-                        <p>id: 7190228529471245614</p>
-                        <p>user_id: @katiekickscancer</p>
-                        <p>video_path: C:\\data\\team-green\\@katiekickscancer\\video_content\\7190228529471245614.mp4</p>
-                        <p>video_content_url: https://v16-webapp.tiktok.com/25845a09e8db97ea82ad205b75037d56/63d0e170/video/tos/maliva/tos-maliva-ve-0068c799-us/6349b865e2454f989842a95f9595ffe3/</p>
-                        <p>video_page_url: https://www.tiktok.com/@katiekickscancer/video/7190228529471245614</p>
-                        <p>timestamp: 1674105545</p>
-                    </footer>
-                </div>
-            </div>
-            <br>
-            <button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-blue" style="width:90%">One of the most awkward questions for me to answer in person is when people ask me why I move to Texas</button>
-            <div id="id02" class="w3-modal">
-                <div class="w3-modal-content w3-card-4">
-
-                    <header class="w3-container w3-blue"> 
-                        <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-
-                        <h2>One of the most awkward questions for me to answer in person is when people ask me why I move to Texas</h2>
-                        <h5>2023-01-18 23:09:29</h5>
-                    </header>
-
-                    <div class="w3-container">
-
-                        <h4>Text</h4>
-                        <p>
-                            I have to say one of the most awkward questions for me to answer in person is when people ask me why I move to Texas. Like you know when people make small talk of like, 
-                            oh are you originally from here? I'm not somebody who can improvise those moments. I'm like yeah, I moved here because I got cancer. And because I really like Austin. 
-                            I always feel bad for the other person on the other side of that conversation. They're trying to make small talk and it instantly gets real deep. I don't mean for it to be, 
-                            I just can't lie to you.
-                        </p>
-
-                        <h4>Summary</h4>
-                        <p>
-                            One of the most awkward questions for me to answer in person is when people ask me why I move to Texas . I always feel bad for the other person on the other side of that conversation . 
-                            I don't mean for it to be, I just can't lie to you. I'm like yeah, I moved here because I got cancer. And because I really like Austin.
-                        </p>
-                    </div>
-
-                    <footer class="w3-container w3-blue">
-                        <h4>Other Data:</h4>
-                        <p>id: 7190210592987155754</p>
-                        <p>user_id: @katiekickscancer</p>
-                        <p>video_path: C:\\data\\team-green\\@katiekickscancer\\video_content\\7190210592987155754.mp4</p>
-                        <p>video_content_url: https://v16-webapp.tiktok.com/b79dc0c1b5a60a9ff2e46a2cc2f2eea9/63d0e112/video/tos/maliva/tos-maliva-ve-0068c799-us/542769b5e61b43ef98bb0c7eb06f6af8/</p>
-                        <p>video_page_url: https://www.tiktok.com/@katiekickscancer/video/7190210592987155754</p>
-                        <p>timestamp: 1674101369</p>
-                    </footer>
-                </div>
-            </div>
-        </div>
+        <div id="timeline_data"></div>
 
     </div>
 
@@ -212,9 +127,9 @@
     <!-- Twitter Content -->
     <div id="Twitter" class="w3-container profileTab" style="margin-left:15%;display:none">
         <br>
-        <a class="twitter-timeline" data-width="1000" data-height="600"
-            href="https://twitter.com/kaydaustin?ref_src=twsrc%5Etfw">Tweets by kaydaustin</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <div id="twitter_feed_data">
+
+        </div>
     </div>
 
     <!-- Youtube Content -->
@@ -240,6 +155,9 @@
 
             if(profileTabName == "Journal") {
                 get_timeline_data();
+            }
+            if(profileTabName == "Twitter") {
+                get_twitter_feed();
             }
             document.getElementById(profileTabName).style.display = "block";
         }

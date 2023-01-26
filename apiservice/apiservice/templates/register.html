@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
     <script src="{{ url_for('static', path='/scripts.js') }}"></script>
-    <title>Login/Signup</title>
+    <title>Register</title>
 </head>
 
 <body>
@@ -20,7 +20,7 @@
     <div class="w3-sidebar w3-light-grey w3-bar-block w3-card-4" style="width:15%">
         <h3 class="w3-bar-item">Login /<br>Signup</h3>
         <h5 class="w3-bar-item">Login with an existing user profile.<br><br>or Signup today!</h5>
-        <div class="w3-panel w3-display-bottomleft w3-card-4" style="height:20%;width:80%;margin-left:10%;">
+        <div id="logged_in_user_box" class="w3-panel w3-display-bottomleft w3-card-4" style="height:20%;width:80%;margin-left:10%;">
             <p>
                 Logged in as:
             </p>
@@ -33,16 +33,16 @@
             Users</button>
         <button class="w3-bar-item w3-button w3-border-right" onclick="userAction()">My
             Profile</button>
-        <button class="w3-bar-item w3-button w3-border-right"
-            onclick="document.location='login.html'">Login</button>
+        <button class="w3-bar-item w3-button w3-border-left" style="float:right;margin-right:15%;"
+            onclick='logout()'>Login</button>
     </div>
 
     <!-- Main Content -->
     <div id="Super Patients" class="w3-container profileTab" style="margin-left:15%">
         <div id="root"></div>
         <form class="w3-container w3-card-4 w3-light-grey w3-display-right" style="width:30%;margin-right:10%">
-            <h2>Signup</h2>
-            <p>Login with valid credentials.</p>
+            <h2>Register</h2>
+            <p>Register a new </p>
 
             <p>
                 <label>Name </label>

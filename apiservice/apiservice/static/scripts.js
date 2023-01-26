@@ -6,7 +6,7 @@ const userAction = async () => {
         body: { myBody: "sdfs" },
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
         }
     });
     const myJson = await response.json();
@@ -26,19 +26,21 @@ const login = async () => {
         }
     });
     const myJson = await response.json();
-    localStorage.setItem('access_token', myJson.access_token);
+    console.log(JSON.stringify(myJson));
+    sessionStorage.setItem('access_token', myJson.access_token);
 
     // Get the user id
     const response2 = await fetch('http://' + ip + '/me', {
         method: 'GET',
         headers: {
             'accept': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
         }
     });
     const myJson2 = await response2.json();
-    localStorage.setItem('user_id', myJson2.id);
-    localStorage.setItem('user_name', myJson2.name);
+    sessionStorage.setItem('user_id', myJson2.id);
+    sessionStorage.setItem('user_name', myJson2.name);
+    sessionStorage.setItem('user_email', myJson2.email);
 
     // Redirect to the user profile
     window.location.href = "http://" + ip + "/profile/" + myJson2.id;
@@ -46,7 +48,9 @@ const login = async () => {
 
 
 const logout = async () => {
-    localStorage.removeItem('access_token');
+    var ip = location.host;
+    clear_session_user_variables();
+
     window.location.href = "http://" + ip + "/login";
 }
 
@@ -83,7 +87,7 @@ const get_profile_info = async () => {
         method: 'GET',
         headers: {
             'accept': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+            'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
         }
     });
 
@@ -130,22 +134,131 @@ const get_timeline_data = async () => {
 
 const set_user_handles = async () => {
     var ip = location.host;
-    var twitterHandle = document.getElementById("twitter_handle").value;
-    var youtubeHandle = document.getElementById("youtube_handle").value;
-    var tiktokHandle = document.getElementById("tiktok_handle").value;
-    /*
-    const response = await fetch('http://' + ip + '/login', {
-        method: 'POST',
-        body: 'grant_type=&username=' + email + '&password=' + password + '&scope=&client_id=&client_secret=',
+
+    const response = await fetch('http://' + ip + '/users', {
+        method: 'PUT',
+        body: JSON.stringify({ "social_media" :
+            { TIKTOK: get_session_user_variable('tiktok_handle'), 
+                    FACEBOOK: get_session_user_variable('facebook_handle'),  
+                    TWITTER: get_session_user_variable('twitter_handle'),  
+                    LINKEDIN: get_session_user_variable('linkedin_handle'),  
+                    INSTAGRAM: get_session_user_variable('instagram_handle'),  
+                    YOUTUBE: get_session_user_variable('youtube_handle'),  
+                    PINTEREST: get_session_user_variable('pinterest_handle')}}),
         headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
         }
     });
     const myJson = await response.json();
-    localStorage.setItem('access_token', myJson.access_token);
-    */
-    console.log("Twitter: " + twitterHandle);
-    console.log("Youtube: " + youtubeHandle);
-    console.log("TikTok: " + tiktokHandle);
+    console.log(myJson);
+    console.log(JSON.stringify(myJson, null, 2));
+    if (response.status == 204) {
+        alert("User handles Saved. [" + response.status + "]");
+        window.location.href = "http://" + ip + "/login";
+    }
+    else {
+        alert("Error saving user handles: [" + response.status + "]<br>" + myJson);
+    }
 }
+
+
+const get_twitter_feed = async () => {
+    var ip = location.host;
+    console.log("Getting twitter feed data...")
+
+    // TODO: Update this assignment after backend integration
+    var twitterHandle = get_session_user_variable('twitter_handle');
+    console.log("Getting twitter feed for username: " + twitterHandle);
+
+    if (twitterHandle == "None") {
+        var twitterFeedHTML = "<h1>Invalid Twitter username/handle: {" + twitterHandle + "}";
+    } else {
+        var twitterFeedHTML = "<a class=\"twitter-timeline\" data-width=\"1000\" data-height=\"600\" href=\"https://twitter.com/" + twitterHandle + "\">Tweets by " + twitterHandle + "</a>";
+    }
+
+    document.getElementById("twitter_feed_data").innerHTML = twitterFeedHTML;
+    twttr.widgets.load(document.getElementById("twitter_feed_data"));
+}
+
+const load_users_page = async () => {
+    var ip = location.host;
+
+    // TODO: Hook up /users endpoint
+    const response = await fetch('http://' + ip + '/users', {
+        method: 'GET',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
+        }
+    });
+    const jsonObj = await response.json();
+    console.log("ResponseCode: [" + response.status + "]  JSON: " + JSON.stringify(jsonObj));
+
+    var userlistHTML = "<div class='w3-modal-content'><header class='w3-container w3-blue'>";
+    userlistHTML += "<span onclick=\"document.getElementById('user_list_modal').style.display='none'\" class='w3-button w3-display-topright'>&times;</span><h2>User List</h2></header>";
+    userlistHTML += "<div class='w3-container'>";
+    const userlistObj = jsonObj.users;
+    let jsonLength = userlistObj.length;
+    for (var i = 0; i < jsonLength; i++) {
+        userlistHTML += "<div class='w3-card-4' style='width:25%'><header class='w3-container w3-light-grey'><h3>" + userlistObj[i].name + "</h3></header>";
+        userlistHTML += "<div class='w3-container'><p>" + userlistObj[i].email + "<br>" + userlistObj[i].id + "</p><br></div>";
+        userlistHTML += "<button class='w3-button w3-block w3-dark-grey'>View Profile</button></div>";
+    }
+    userlistHTML += "</div><footer class='w3-container w3-blue'><p>Footer</p></div>";
+
+    document.getElementById("user_list_modal").innerHTML = userlistHTML;
+    document.getElementById('user_list_modal').style.display='block';
+
+    //window.location.href = "http://" + ip + "/users";
+}
+
+const logout_and_register = async () => {
+    var ip = location.host;
+
+    clear_session_user_variables();
+
+    window.location.href = "http://" + ip + "/register";
+}
+
+
+function get_session_user_variable(item_name) {
+    if(sessionStorage.getItem(item_name) == null)
+        return "None";
+    else
+    return sessionStorage.getItem(item_name);
+}
+
+
+function clear_session_user_variables() {
+    sessionStorage.removeItem('access_token');
+    sessionStorage.removeItem('user_id');
+    sessionStorage.removeItem('user_name');
+    sessionStorage.removeItem('user_email');
+}
+
+
+setInterval(function() {
+    document.getElementById("logged_in_user_box").innerHTML = "<p>Logged in as:</p><p style='font-size:8px';>" + 
+        get_session_user_variable('user_name') + "<br>" + 
+        get_session_user_variable('user_email') + "<br>" + 
+        get_session_user_variable('user_id') + "</p>";
+}, 1000);
+
+
+window.twttr = (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+        t._e.push(f);
+    };
+
+    return t;
+}(document, "script", "twitter-wjs"));
