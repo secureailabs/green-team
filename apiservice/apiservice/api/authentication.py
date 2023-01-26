@@ -19,7 +19,7 @@ router = APIRouter()
 # Authentication settings
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 20
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/login")
 
 
 def get_password_hash(salt, password):

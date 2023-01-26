@@ -102,12 +102,22 @@ const get_timeline_data = async () => {
     var ip = location.host;
     console.log("Getting timeline data...")
 
-    let testJsonStr = '{ "timeline" : [' +
-        '{ "id":"01" , "user_id":"111345" , "video_path":"Cdata1.mp4" , "video_content_url":"httpstiktok1" , "video_page_url":"httpstiktok.com@handle1" , "timestamp":"1113451" , "datestring":"2023-01-20" , "text":"text here 01" , "summary":"summary here 01" , "title":"Title 1 here" },' +
-        '{ "id":"02" , "user_id":"111345" , "video_path":"Cdata2.mp4" , "video_content_url":"httpstiktok2" , "video_page_url":"httpstiktok.com@handle2" , "timestamp":"1113452" , "datestring":"2023-01-21" , "text":"text here 02" , "summary":"summary here 02" , "title":"Title 2 here" },' +
-        '{ "id":"03" , "user_id":"111345" , "video_path":"Cdata3.mp4" , "video_content_url":"httpstiktok3" , "video_page_url":"httpstiktok.com@handle3" , "timestamp":"1113453" , "datestring":"2023-01-22" , "text":"text here 03" , "summary":"summary here 03" , "title":"Title 3 here" } ]}';
+    // Get the timeline from the API
+    const response = await fetch('http://' + ip + '/api/users/' + sessionStorage.getItem('user_id') + '/timeline', {
+        method: 'GET',
+        headers: {
+            'accept': 'application/json',
+            'Authorization': 'Bearer ' + sessionStorage.getItem('access_token')
+        }
+    });
 
-    const jsonObj = JSON.parse(testJsonStr);
+    const jsonObj = await response.json();
+
+    // let testJsonStr = '{ "timeline" : [' +
+    //     '{ "id":"01" , "user_id":"111345" , "video_path":"Cdata1.mp4" , "video_content_url":"httpstiktok1" , "video_page_url":"httpstiktok.com@handle1" , "timestamp":"1113451" , "datestring":"2023-01-20" , "text":"text here 01" , "summary":"summary here 01" , "title":"Title 1 here" },' +
+    //     '{ "id":"02" , "user_id":"111345" , "video_path":"Cdata2.mp4" , "video_content_url":"httpstiktok2" , "video_page_url":"httpstiktok.com@handle2" , "timestamp":"1113452" , "datestring":"2023-01-21" , "text":"text here 02" , "summary":"summary here 02" , "title":"Title 2 here" },' +
+    //     '{ "id":"03" , "user_id":"111345" , "video_path":"Cdata3.mp4" , "video_content_url":"httpstiktok3" , "video_page_url":"httpstiktok.com@handle3" , "timestamp":"1113453" , "datestring":"2023-01-22" , "text":"text here 03" , "summary":"summary here 03" , "title":"Title 3 here" } ]}';
+    // const jsonObj = JSON.parse(testJsonStr);
     console.log(jsonObj);
 
     var timelineHTML = "";
@@ -192,7 +202,6 @@ const get_twitter_feed = async () => {
 const load_users_page = async () => {
     var ip = location.host;
 
-    // TODO: Hook up /users endpoint
     const response = await fetch('http://' + ip + '/api/users', {
         method: 'GET',
         headers: {

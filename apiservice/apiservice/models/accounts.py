@@ -61,3 +61,20 @@ class GetMultipleUsers_Out(SailBaseModel):
 
 class AddSocialMedia_In(SailBaseModel):
     social_media: Dict[SocialMedia, str] = Field(...)
+
+
+class TimelineEvents_Db(SailBaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    user_id: PyObjectId = Field(...)
+    video_path: StrictStr = Field(...)
+    video_content_url: StrictStr = Field(...)
+    video_page_url: StrictStr = Field(...)
+    timestamp: int = Field(...)
+    datestring: StrictStr = Field(default=None)
+    text: StrictStr = Field(default=None)
+    summary: StrictStr = Field(default=None)
+    title: StrictStr = Field(default=None)
+
+
+class Timeline(SailBaseModel):
+    timeline: List[TimelineEvents_Db] = Field(...)
