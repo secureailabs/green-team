@@ -44,7 +44,7 @@ for user_handle in list_handle:
                 raise Exception("processing incomplete")
             transcript = context.load_transcript(user_handle, id_video)
             summary = context.load_extract(user_handle, id_video, "summary_chatgpt")
-            symptoms = context.has_extract(user_handle, id_video, "summary_chatgpt"):
+            symptoms = context.has_extract(user_handle, id_video, "symptoms_chatgpt")
             path_file_video = context._path_video_content(user_handle, id_video)
             timestamp = get_timestamp(context, user_handle, id_video)
             datestring = str(datetime.fromtimestamp(timestamp))
@@ -62,6 +62,7 @@ for user_handle in list_handle:
             timeline_item["datestring"] = datestring
             timeline_item["text"] = transcript["text"]
             timeline_item["summary"] = summary
+            timeline_item["symptoms"] = symptoms
             timeline_item["title"] = summary.split(".")[0]
             dict_timeline["timeline"].append(timeline_item)
     with open("timeline.json", "w") as file:
