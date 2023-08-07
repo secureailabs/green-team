@@ -5,7 +5,7 @@ type_extract = "symptoms_chatgpt"
 list_handle = ["@katiekickscancer"]
 import openai
 
-openai.api_key = "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"
+openai.api_key = ""
 # Set the model and prompt
 model_engine = "text-davinci-003"
 prompt_base = "Get a list of symptoms from: "
