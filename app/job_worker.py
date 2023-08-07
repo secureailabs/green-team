@@ -40,10 +40,13 @@ class JobWorker(threading.Thread):
         )
         path_file_story = os.path.abspath(os.path.join(self.path_dir_data, "story", job_id, "y.json"))
         try:
-
+            job["status"] = "downloading"
             self.downloader.download(url, path_file_video)
+            job["status"] = "transcoding"
             self.transcoder.extract_audio(path_file_video, path_file_audio)
+            job["status"] = "transcribing"
             self.transcriber.transcribe(path_file_audio, path_file_transcript)
+            job["status"] = "prompting"
             self.prompter.prompt(path_file_transcript, path_file_story)
             with open(path_file_story, "r") as file:
                 job["story"] = json.load(file)

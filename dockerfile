@@ -8,6 +8,10 @@ COPY requirements.txt requirements.txt
 # Install necessary packages
 RUN pip install -r requirements.txt
 
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y ffmpeg
+
 # get arguments for private repo
 ARG ARIN_PYPI_REPOSITORY_URL
 ARG ARIN_PYPI_USERNAME

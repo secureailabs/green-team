@@ -3,3 +3,4 @@ chromedriver_win32/chromedriver.exe
 chromedriver_win32/LICENSE.chromedriver
 *.cpython-38.pyc
 venv**
+N
