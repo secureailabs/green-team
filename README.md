@@ -1,6 +1,6 @@
 # green-team
 
-## startup
+## startup manual
 
 set the following environment variable: \\
 ```
@@ -10,6 +10,18 @@ set the following environment variable: \\
 ```
 start the service from the app folder or use the docker_deploy command \\
 ```uvicorn main:app --host 0.0.0.0 --port 8000```
+
+## startup docker
+set the following environment variable: \\
+```
+"ARIN_PYPI_REPOSITORY_URL"=
+"ARIN_PYPI_USERNAME"=
+"ARIN_PYPI_PASSWORD"=
+"PATH_DIR_DATA_PATIENT_STORY"="/data/patient_story"
+"PATH_FILE_FFMPEG"="/usr/bin/ffmpeg"
+"OPENAI_API_KEY"=
+```
+python deploy_docker.py \\
 
 ## usage
 at the /docs# endpoint you will find a swagger documentation \\

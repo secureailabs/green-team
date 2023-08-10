@@ -44,7 +44,7 @@ if __name__ == "__main__":
     with open("app/__init__.py") as file:
         title = re.search(r'^__title__\s*=\s*[\'"]([^\'"]*)[\'"]', file.read(), re.MULTILINE).group(1)  # type: ignore
     image_name = f"arin/{title}-image"
-    image_tag = "0.1.0"
+    image_tag = version
     conainer_name = f"{title}-container"
 
     docker_build(image_name, image_tag)

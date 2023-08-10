@@ -21,10 +21,10 @@ ARG ARIN_PYPI_PASSWORD
 RUN echo "[global]\nindex-url = $ARIN_PYPI_REPOSITORY_URL\ntrusted-host = your.private.pypi.repo\nextra-index-url = https://pypi.org/simple\nusername = $ARIN_PYPI_USERNAME\npassword = $ARIN_PYPI_PASSWORD" > /etc/pip.conf
 
 # Copy the FastAPI service files into the container's working directory
-COPY requirements_internal.txt requirements_internal.txt
+#COPY requirements_internal.txt requirements_internal.txt
 
 # Install necessary packages
-RUN pip install --trusted-host 172.20.0.5 -r requirements_internal.txt
+#RUN pip install --trusted-host 172.20.0.5 -r requirements_internal.txt
 
 # Copy the FastAPI service files into the container's working directory
 COPY /app /app/
