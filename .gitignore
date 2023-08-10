@@ -1,6 +1,7 @@
 ffmpeg-master-latest-win64-gpl-shared/doc/fate.html
 chromedriver_win32/chromedriver.exe
 chromedriver_win32/LICENSE.chromedriver
-*.cpython-38.pyc
+*.pyc
 venv**
 N
+app/__pycache__/test_full.cpython-38-pytest-6.2.4.pyc

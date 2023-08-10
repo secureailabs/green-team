@@ -14,3 +14,5 @@ if __name__ == "__main__":
 
     transcript = requests.get(url_base + f"transcript/{job_id}").json()
     print(transcript["text"])
+    story = requests.get(url_base + f"story/{job_id}").json()
+    print(story)
