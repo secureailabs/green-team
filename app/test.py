@@ -24,7 +24,7 @@ if __name__ == "__main__":
     path_file_transcript = os.path.abspath(f"data/transcript/{job_id}/transcript.json")
     path_file_story = os.path.abspath(f"data/story/{job_id}/story.json")
 
-    downloader.download(url, path_file_video)
-    transcoder.extract_audio(path_file_video, path_file_audio)
-    transcriber.transcribe(path_file_audio, path_file_transcript)
+    # downloader.download(url, path_file_video)
+    # transcoder.extract_audio(path_file_video, path_file_audio)
+    # transcriber.transcribe(path_file_audio, path_file_transcript)
     prompter.prompt(path_file_transcript, path_file_story)

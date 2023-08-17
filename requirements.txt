@@ -7,7 +7,11 @@ pytube==15.0.0
 fastapi==0.101.0
 uvicorn==0.23.2
 
+#torch==1.4.0 cpu edition
+https://download.pytorch.org/whl/cu101/torch-1.6.0-cp38-cp38-linux_x86_64.whl
+
 openai==0.27.8
 openai-whisper==20230314
+
 #arin-core-azure==1.0.0
 

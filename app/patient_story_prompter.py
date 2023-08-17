@@ -2,11 +2,14 @@ import json
 import os
 
 import openai
+from arin_core_azure.env_tools import get_string_from_env
+from arin_openai.client_openai import ClientOpenai
 
 
 class PatientStoryPrompter:
     def __init__(self):
-        openai.api_key = os.environ["OPENAI_API_KEY"]
+        engine_name = get_string_from_env("OPENAI_ENGINE_NAME")
+        self.client = ClientOpenai.from_default_azure(engine_name, do_cache=True)
 
     def prompt(self, path_file_transcript: str, path_file_story: str):
         if not os.path.isfile(path_file_transcript):
@@ -53,12 +56,7 @@ class PatientStoryPrompter:
             }
         )
 
-        call_dict = {}
-        call_dict["model"] = "gpt-3.5-turbo-16k"
-        call_dict["temperature"] = 0.95
-        call_dict["messages"] = list_message
-
-        chat = openai.ChatCompletion.create(**call_dict)
+        chat = self.client.chat_completion_messages(list_message, temperature=0.95)
 
         reply = chat.choices[0].message.content
 

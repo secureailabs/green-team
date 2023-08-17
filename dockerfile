@@ -2,15 +2,17 @@
 FROM python:3.8-slim
 
 
+#install ffmpeg
+RUN apt-get -y update
+RUN apt-get -y upgrade
+RUN apt-get install -y ffmpeg
+RUN pip install --upgrade pip
+
 # Copy the FastAPI service files into the container's working directory
 COPY requirements.txt requirements.txt
 
 # Install necessary packages
 RUN pip install -r requirements.txt
-
-RUN apt-get -y update
-RUN apt-get -y upgrade
-RUN apt-get install -y ffmpeg
 
 # get arguments for private repo
 ARG ARIN_PYPI_REPOSITORY_URL
