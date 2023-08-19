@@ -9,7 +9,7 @@ from arin_openai.client_openai import ClientOpenai
 class PatientStoryPrompter:
     def __init__(self):
         engine_name = get_string_from_env("OPENAI_ENGINE_NAME")
-        self.client = ClientOpenai.from_default_azure(engine_name, do_cache=True)
+        self.client = ClientOpenai.from_default_azure(engine_name, do_cache=False)
 
     def prompt(self, path_file_transcript: str, path_file_story: str):
         if not os.path.isfile(path_file_transcript):

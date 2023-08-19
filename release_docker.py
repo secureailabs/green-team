@@ -1,8 +1,9 @@
 # function to tag and push the input image to the docker hub
 import os
+import re
 import subprocess
 
-from deploy_docker import docker_build
+from build_docker import build_docker
 
 
 def push_image_to_registry(image_name: str, image_tag: str):
@@ -36,9 +37,14 @@ def push_image_to_registry(image_name: str, image_tag: str):
 
 
 if __name__ == "__main__":
-    project_name = "arin-patient-story"
+
+    with open("app/__init__.py") as file:
+        module_version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', file.read(), re.MULTILINE).group(1)  # type: ignore
+    with open("app/__init__.py") as file:
+        module_title = re.search(r'^__title__\s*=\s*[\'"]([^\'"]*)[\'"]', file.read(), re.MULTILINE).group(1)  # type: ignore
+    project_name = module_title
     image_name = f"arin/{project_name}-image"
-    image_tag = "0.2.0"
+    image_tag = module_version
     conainer_name = f"{project_name}-container"
-    docker_build(image_name, image_tag)
+    build_docker(image_name, image_tag)
     push_image_to_registry(image_name, image_tag)

@@ -8,7 +8,11 @@ fastapi==0.101.0
 uvicorn==0.23.2
 
 #torch==1.4.0 cpu edition
-https://download.pytorch.org/whl/cu101/torch-1.6.0-cp38-cp38-linux_x86_64.whl
+#https://download.pytorch.org/whl/cu101/torch-1.6.0-cp38-cp38-linux_x86_64.whl  #got deprecated
+# https://download.pytorch.org/whl/cu101/torch-1.6.0+cu101-cp38-cp38-linux_x86_64.whl #+wrecking the url
+# https://download.pytorch.org/whl/cu101/torch-1.6.0%2Bcu101-cp38-cp38-linux_x86_64.whl #still sort of gpu be even better
+# https://download.pytorch.org/whl/cpu/torch-1.6.0%2Bcpu-cp38-cp38-linux_x86_64.whl # Has weird error https://github.com/NVIDIA/NeMo/issues/1590
+https://download.pytorch.org/whl/cpu/torch-1.7.1%2Bcpu-cp38-cp38-linux_x86_64.whl
 
 openai==0.27.8
 openai-whisper==20230314
